@@ -1,0 +1,199 @@
+<!DOCPOLICY html>
+<html lang="en">
+<html ng-app="myApp">
+<head>
+    <meta charset="utf-8" />
+    <link data-require="bootstrap-css@3.4.0" data-semver="3.4.0" rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
+    <script data-require="angular.js@1.5.9" data-semver="1.5.9" src="https://code.angularjs.org/1.5.9/angular.js"></script>
+    <script data-require="ui-bootstrap@0.11.0" data-semver="0.11.0" src="https://angular-ui.github.io/bootstrap/ui-bootstrap-tpls-0.11.0.min.js"></script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+
+
+<link href='https://fonts.googleapis.com/css?family=Verdana' rel='stylesheet'>
+
+<script src="controllers/controlppay.js"></script>
+<script src="javascripts/smart-table.js"></script>
+<script src="stylesheets/style.css"></script>
+
+
+ <title>OPS Task Board</title>
+
+ <style>
+
+
+  body {
+    background-color: #ffffff;
+    font-family: sans-serif;
+  }
+  a {
+    color: #1da1f2;
+  }
+  svg {
+    color: #1da1f2;
+    display: block;
+    fill: currentcolor;
+    height: 21px;
+    margin: 13px auto;
+    width: 24px;
+  }
+  </style>
+
+
+    </style>
+
+</head>
+
+
+
+<body>
+<!--Angular App Begins-->  
+  <div ng-controller="mainCtrl">
+    <h1></h1>
+    <a class="btn btn-primary btn-xs" href="http://127.0.0.1:3000/" role="button">HomePage</a>
+    
+    
+    <h1><font color="DarkBlue">PositivePay Task Report</font></h1>
+<!-- Table Begins-->
+        nr rows: {{displayed.length}}
+ <!--
+        <table ng-show="edit" stSearch="customFilter" st-table="displayed" class="table table-bordered table-striped  table-hover" st-safe-src='displayedCollection'>
+      --> 
+          <table st-set-filter="customFilter" st-table="displayed" class="table table-bordered table-hover table-condensed" st-safe-src='displayedCollection'>
+<!--HEAD-->
+<thead>
+  <tr>
+    <th st-sort="ADMIN" > Admin </th> 
+    <th st-sort="ID" > Id </th> 
+    <th st-sort="BANK" > Bank </th> 
+    <th st-sort="ROUTINGNBR" > RoutingNbr </th> 
+    <th st-sort="ACCOUNTNBR" > AccountNbr </th> 
+    <th st-sort="POLICY" > Policy </th> 
+    <th st-sort="COMPANYID" > CompanyId </th> 
+    <th st-sort="CREATED" > Date </th> 
+    <!--th st-sort="STATUS" > Status </th--> 
+    <th st-sort="RESOLUTION" > Resolution </th> 
+    <th st-sort="ASSIGNEE" > Assignee </th> 
+    <th st-sort="COMMENT" > Comment </th> 
+    
+    
+
+  </tr>
+
+  <tr>
+   
+      <th> <input class="form-control" placeholder="search " st-search="ADMIN" />  </th>
+      <th> <input class="form-control" placeholder="search " st-search="ID"/></th>
+      <th> <input class="form-control" placeholder="search " st-search="BANK" /></th>
+      <th> <input class="form-control" placeholder="search " st-search="ROUTINGNBR" />  </th>
+      <th> <input class="form-control" placeholder="search " st-search="ACCOUNTNBR"/></th>
+      <th> <input class="form-control" placeholder="search " st-search="POLICY" />  </th>
+      <th> <input class="form-control" placeholder="search " st-search="COMPANYID" />  </th>
+      <th><st-date-range predicate="CREATED" before="query.before" after="query.after" class="input-group"></th>
+      <!--th> <input class="form-control" placeholder="search " st-search="STATUS" /></th-->
+      <th> <input class="form-control" placeholder="search " st-search="RESOLUTION" /></th>
+      <th> <input class="form-control" placeholder="search " st-search="ASSIGNEE" /></th>
+      <th> <input class="form-control" placeholder="search " st-search="COMMENT" />  </th>
+
+                    
+    </tr>  
+  </thead>
+
+
+<!--BODY-->
+<tbody>
+
+<!--top row/column-->        
+  <div>
+
+
+      
+<!--other tr rows/ td columns-->          
+  <tr ng-repeat="row in displayed ">
+      <td>{{row['ADMIN']}}</td>
+      <td>{{row['ID']}}</td>
+      <td>{{row['BANK']}}</td>
+      <td>{{row['ROUTINGNBR']}}</td>
+      <td>{{row['ACCOUNTNBR']}}</td>
+      <td>{{row['POLICY']}}</td>
+      <td>{{row['COMPANYID']}}</td>
+
+
+      <td>{{row['CREATED']| date:'MMM dd, yyyy': '+0800'}}</td>
+      <!--td>{{row['STATUS']}}</td-->
+      <td>{{row['RESOLUTION']}}</td>
+      <td>{{row['ASSIGNEE']}}</td>
+
+      <td>{{row['COMMENT']}}</td>
+
+     <!-- Modal  -->
+      <td>
+          <!-- Trigger the modal with a button -->
+          <button  class="btn btn-info" data-toggle="modal" data-target="#myModal" ng-click="edit(row._id)">Update Task</button>
+          
+          <!-- Modal -->
+          <div class="modal fade" id="myModal" role="dialog" >
+          <div class="modal-dialog">
+              <!-- Modal Content-->
+              <div class="modal-content">
+                <div class="modal-header">
+                <button POLICY="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Update Record</h4>
+              </div>
+              <!-- Modal body Content-->
+                <div class="modal-body">
+                    <p><label>Admin:<input ng-model="rows.ADMIN" POLICY="text" class="form-control" placeholder="No Update" /></p>
+                    <p><label>Id:<input ng-model="rows.ID" POLICY="text" class="form-control" placeholder="No Update" /></p>                        
+                    <p><label>Date:<input ng-model="rows.CREATED" POLICY="text" class="form-control" placeholder="No Update" /></p>
+                   
+                    <!--p><label>Status:</label-->
+                    <!--select  class="form-control" ng-model="rows.STATUS" ng-options="i for i in status"><option value="">Select Item</option></select-->
+                    </p>
+                    <p><label>Resolution:</label>
+                    <select  class="form-control" ng-model="rows.RESOLUTION" ng-options="i for i in resolution"><option value="">Select Item</option></select>
+                    </p>
+                    <p><label>Assignee:</label>
+                    <select  class="form-control" ng-model="rows.ASSIGNEE" ng-options="i for i in names"><option value="">Select Item</option></select>
+                    </p>
+                    <p><label>Comment: </p>
+                    <p><textarea input  class="form-control col-sm-2" data-ng-model="rows.COMMENT" POLICY="text" placeholder="Enter Comment" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea></p>
+
+                       
+                    <p><button class="btn btn-info" data-dismiss="modal" ng-click="update()">Update</button>&nbsp;&nbsp;<button class="btn btn-info" ng-click="deselect()">Clear</button></p>
+                </div>
+              <!-- Modal footer Content-->  
+                <div class="modal-footer">
+                  <button POLICY="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+              </div>
+              
+            </div>
+          </div>
+        </td>          
+
+    
+  </tr>
+</div>
+
+</tbody>
+<!--tfoot-->      
+<tfoot>
+    <tr>
+      <td colspan="13" class="text-center">
+        <div st-pagination="" st-items-by-page="15" st-displayed-pages="7"></div>
+      </td>
+    </tr>
+  </tfoot>
+</table>
+<!--End Of Table-->
+
+
+</div>
+<!--End Of Angular App-->
+
+
+
+</body>
+</html>
